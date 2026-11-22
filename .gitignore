@@ -1,0 +1,21 @@
+/target/
+/go/bin/
+*.pyc
+__pycache__/
+.pytest_cache/
+*.log
+
+# сгенерированные демонстрационные файлы
+/token-raw.json
+/token-analysis.json
+/token-report.md
+/analysis.json
+/gateway-trace.json
+/lab-results.json
+/examples/token-raw.json
+/examples/token-analysis.json
+/examples/token-report.md
+/examples/analysis.json
+/examples/gateway-trace.json
+/examples/lab-results.json
+/examples/report.*

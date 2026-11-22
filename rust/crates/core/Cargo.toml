@@ -1,0 +1,15 @@
+[package]
+name = "dscore"
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+authors = ["acciv <shutzombie@gmail.com>"]
+description = "Core analyzers for Discord API security research lab"
+
+[lib]
+name = "dscore"
+path = "src/lib.rs"
+
+[[bin]]
+name = "dscore"
+path = "src/main.rs"

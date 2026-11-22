@@ -1,0 +1,13 @@
+services:
+  dsrlab:
+    build: .
+    image: dsrlab:local
+    working_dir: /work
+    volumes:
+      - .:/work
+    environment:
+      PYTHONPATH: /opt/dsrlab/python
+      TGSEC_CORE: /usr/local/bin/dscore
+      TGSEC_DSTOKEN: /usr/local/bin/dstoken
+      TGSEC_DSMOCK: /usr/local/bin/dsmock
+    command: ["python3", "-m", "dsrlab", "help"]

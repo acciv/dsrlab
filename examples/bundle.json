@@ -1,0 +1,113 @@
+{
+  "version": "1.0",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/v10/users/@me",
+      "auth": "bearer",
+      "rate_limit": "per-route",
+      "scopes": ["identify"],
+      "errors": [401, 403],
+      "description": "текущий пользователь"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v10/channels/100000000000000003/messages",
+      "auth": "bot",
+      "rate_limit": "",
+      "scopes": ["bot"],
+      "errors": [],
+      "description": "отправка сообщения"
+    },
+    {
+      "method": "GET",
+      "path": "/gateway",
+      "auth": "none",
+      "rate_limit": "per-route",
+      "scopes": [],
+      "errors": [401],
+      "description": "публичный адрес Gateway"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v10/private/data",
+      "auth": "none",
+      "rate_limit": "per-route",
+      "scopes": [],
+      "errors": [401],
+      "description": "внутренний endpoint без авторизации"
+    }
+  ],
+  "oauth": {
+    "client_id": "100000000000000001",
+    "redirect_uris": [
+      "http://localhost:8080/callback",
+      "http://example.test/callback",
+      "https://example.test/*"
+    ],
+    "scopes": ["identify", "email", "guilds.join"],
+    "pkce": false,
+    "state": false,
+    "token_endpoint_auth_method": "none"
+  },
+  "permissions": [
+    {
+      "role": "reader",
+      "bits": 1024,
+      "scope": "guild"
+    },
+    {
+      "role": "bot",
+      "bits": 8,
+      "scope": "guild"
+    },
+    {
+      "role": "moderator-global",
+      "bits": 4,
+      "scope": "global"
+    }
+  ],
+  "gateway": {
+    "version": 9,
+    "heartbeat_interval": 500,
+    "intents": [],
+    "events": ["MESSAGE_CREATE"],
+    "reconnect": "none",
+    "resume": false
+  },
+  "scenarios": [
+    {
+      "id": "ratelimit-001",
+      "type": "rate_limit",
+      "title": "Ответ 429 без корректной обработки Retry-After",
+      "endpoint": "/api/v10/rate-limited",
+      "mock_response": 429,
+      "expected": "Retry-After и код 429",
+      "fix_check": "Retry-After присутствует и равен 1",
+      "impact": "medium",
+      "fixed": false
+    },
+    {
+      "id": "forbidden-002",
+      "type": "permissions",
+      "title": "Недостаточно прав на чтение канала",
+      "endpoint": "/api/v10/forbidden",
+      "mock_response": 403,
+      "expected": "код 403 и JSON с сообщением",
+      "fix_check": "проверка прав доступа перед запросом",
+      "impact": "low",
+      "fixed": true
+    },
+    {
+      "id": "auth-003",
+      "type": "auth",
+      "title": "Синтетический профиль после авторизации",
+      "endpoint": "/api/v10/users/@me",
+      "mock_response": 200,
+      "expected": "DUMMY_USER",
+      "fix_check": "токен не попадает в логи",
+      "impact": "high",
+      "fixed": false
+    }
+  ]
+}

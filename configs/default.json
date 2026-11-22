@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "exclude_dirs": [
+    ".git",
+    "target",
+    "node_modules",
+    "__pycache__",
+    "dist",
+    "build",
+    "vendor",
+    ".idea",
+    ".vscode"
+  ],
+  "exclude_extensions": [
+    ".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".gz", ".tar",
+    ".so", ".dll", ".exe", ".bin", ".pyc"
+  ],
+  "max_file_bytes": 2097152,
+  "max_line_bytes": 16384,
+  "workers": 0,
+  "patterns": [
+    {
+      "id": "discord_bot_token",
+      "type": "discord_bot_token",
+      "regex": "([0-9]{17,20})\\.([A-Za-z0-9_-]{6})\\.([A-Za-z0-9_-]{27})",
+      "value_group": 3,
+      "risk_weight": 50,
+      "expected_length": 27
+    }
+  ],
+  "false_positive_markers": [
+    "DUMMY", "FAKE", "EXAMPLE", "SAMPLE", "REDACTED", "PLACEHOLDER", "TESTKEY"
+  ],
+  "risk_levels": {"low": 25, "medium": 50, "high": 75, "critical": 90},
+  "public_paths": ["/gateway", "/oauth2/token"],
+  "dangerous_scopes": [
+    "guilds.join", "webhook.incoming", "applications.commands.update"
+  ],
+  "dangerous_permissions": [
+    "ADMINISTRATOR", "BAN_MEMBERS", "KICK_MEMBERS", "MANAGE_GUILD",
+    "MANAGE_CHANNELS", "MANAGE_ROLES", "MANAGE_WEBHOOKS", "MANAGE_MESSAGES"
+  ],
+  "gateway": {
+    "heartbeat_min": 1000,
+    "heartbeat_max": 60000,
+    "min_version": 10
+  }
+}

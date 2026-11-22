@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dsrlab"
+version = "1.0.0"
+description = "Discord API Security Research Lab - Python CLI, config, reports and local mock client"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dsrlab*"]
